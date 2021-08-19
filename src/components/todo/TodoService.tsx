@@ -13,6 +13,24 @@ export const useTodo = () => {
   const [todoState, setTodoState] = useState(initialTodos);
   var nextIdState = 0;
 
+  const incrementNextId = () => {
+    nextIdState = nextIdState + 1;
+  };
+
+  const loadData = () => {
+    let data = localStorage.getItem("todos");
+    if (data === undefined) data = "";
+    initialTodos = JSON.parse(data!);
+    if (initialTodos && initialTodos.length >= 1) {
+      incrementNextId();
+    }
+    setTodoState(initialTodos);
+  };
+
+  const saveData = () => {
+    localStorage.setItem("todos", JSON.stringify(todoState));
+  };
+
   useEffect(() => {
     loadData();
   }, []);
@@ -21,10 +39,7 @@ export const useTodo = () => {
     saveData();
   }, [todoState]);
 
-  const incrementNextId = () => {
-    nextIdState = nextIdState + 1;
-  };
-
+ 
   const toggleTodo = (id: number) => {
     //@TODO
   };
@@ -45,20 +60,7 @@ export const useTodo = () => {
     );
   };
 
-  const loadData = () => {
-    let data = localStorage.getItem("todos");
-    if (data === undefined) data = "";
-    initialTodos = JSON.parse(data!);
-    if (initialTodos && initialTodos.length >= 1) {
-      incrementNextId();
-    }
-    setTodoState(initialTodos);
-  };
-
-  const saveData = () => {
-    localStorage.setItem("todos", JSON.stringify(todoState));
-  };
-
+  
   return {
     todoState,
     nextIdState,
