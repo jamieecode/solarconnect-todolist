@@ -1,7 +1,8 @@
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Itodo } from "components/todo/TodoService";
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
+import { Modal } from "antd";
 
 const Remove = styled.div`
   display: flex;
@@ -9,6 +10,7 @@ const Remove = styled.div`
   justify-content: center;
   color: #119955;
   font-size: 16px;
+  cursor: pointer;
 `;
 
 const TodoItemBlock = styled.div`
@@ -54,8 +56,14 @@ const Text = styled.div<{ done: boolean }>`
     `}
 `;
 
-const EndDate = styled.div`
+const EndDate = styled.div<{ done: boolean }>`
   flex: 1;
+  ${(props) =>
+    props.done &&
+    css`
+      color: #ced4da;
+      text-decoration: line-through;
+    `}
 `;
 
 interface TodoItemProps {
@@ -67,11 +75,25 @@ interface TodoItemProps {
 const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
   const done = todo.done;
   const handleToggle = () => {
+    console.log("toggle", todo);
     toggleTodo(todo.id);
   };
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const handleRemove = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+    console.log("delete", todo);
     removeTodo(todo.id);
+  };
+
+  const handleCancel = (e) => {
+    e.stopPropagation();
+    setIsModalVisible(false);
   };
 
   return (
@@ -80,8 +102,21 @@ const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
         {done && <CheckOutlined />}
       </CheckCircle>
       <Text done={done}>{todo.text}</Text>
-      <EndDate>{todo.deadLine}</EndDate>
+      <EndDate done={done}>{todo.deadLine}</EndDate>
       <Remove onClick={handleRemove}>
+        <Modal
+          closable={true}
+          title={todo.text}
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <p>
+            {todo.text} {todo.deadLine}
+          </p>
+          <p>일정을 삭제하시겠습니까?</p>
+        </Modal>
+
         <DeleteOutlined />
       </Remove>
     </TodoItemBlock>

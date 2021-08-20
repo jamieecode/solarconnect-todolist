@@ -16,15 +16,14 @@ const DateText = styled.div`
 `;
 
 const DayText = styled.div`
-  font-size: 22px;
+  font-size: 26px;
   color: #119955;
-  padding-top: 5px;
 `;
 
 const TimeText = styled.div`
-  font-size: 22px;
+  font-size: 26px;
   color: #119955;
-  padding-top: 5px;
+  padding-left: 20px;
 `;
 
 const TodoHead = () => {
@@ -54,15 +53,20 @@ const TodoHead = () => {
     "December"
   ];
 
-  const timeString = `${time.getHours()} : ${time.getMinutes()} : ${time.getSeconds()}`;
+  const timeString = `${
+    (time.getHours() < 10 ? "0" : "") + time.getHours()
+  } : ${(time.getMinutes() < 10 ? "0" : "") + time.getMinutes()} : ${
+    (time.getSeconds() < 10 ? "0" : "") + time.getSeconds()
+  }`;
   const dayString = `${getUsDay[time.getDay()]}day`;
-  const dateString = `${getUsMonth[time.getMonth()]}, ${time.getFullYear()}`;
+  const dateString = `${
+    getUsMonth[time.getMonth()]
+  } ${time.getDate()}, ${time.getFullYear()}`;
   return (
     <TodoHeadBlock>
-      <TimeText>{timeString}</TimeText>
-
       <DayText>{dayString}</DayText>
       <DateText>{dateString}</DateText>
+      <TimeText>{timeString}</TimeText>
     </TodoHeadBlock>
   );
 };

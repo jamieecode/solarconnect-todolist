@@ -12,10 +12,12 @@ let initialTodos: Itodo[] = [];
 
 export const useTodo = () => {
   const [todoState, setTodoState] = useState(initialTodos);
-  var nextIdState = 0;
+  let nextIdState = initialTodos.length;
+  console.log(nextIdState);
 
   const incrementNextId = () => {
     nextIdState = nextIdState + 1;
+    console.log(nextIdState);
   };
 
   const loadData = () => {
@@ -24,6 +26,7 @@ export const useTodo = () => {
     initialTodos = JSON.parse(data!);
     if (initialTodos && initialTodos.length >= 1) {
       incrementNextId();
+      console.log(nextIdState);
     }
     setTodoState(initialTodos);
   };
@@ -41,6 +44,7 @@ export const useTodo = () => {
   }, [todoState]);
 
   const toggleTodo = (id: number) => {
+    console.log(id);
     //@TODO
     const newTodo = todoState.map(
       (todo: Itodo): Itodo => {
@@ -54,6 +58,8 @@ export const useTodo = () => {
   };
 
   const removeTodo = (id: number) => {
+    console.log(id);
+
     setTodoState((prevState) =>
       prevState.filter((todo: Itodo) => todo.id !== id)
     );
@@ -61,6 +67,8 @@ export const useTodo = () => {
 
   const createTodo = (todo: Itodo) => {
     const nextId = todoState.length + 1;
+    console.log(todo.id);
+    console.log(nextId);
     setTodoState((prevState) =>
       prevState.concat({
         ...todo,

@@ -39,7 +39,7 @@ const InsertForm = styled.form`
 const Input = styled.input`
   padding: 12px;
   border: 1px solid #dddddd;
-  width: 100%;
+  width: 70%;
   outline: none;
   font-size: 21px;
   box-sizing: border-box;
@@ -66,9 +66,9 @@ const TodoCreate = ({
   const [deadLine, setDeadLine] = useState("");
 
   const handleToggle = () => setOpen(!open);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-
+  };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // 새로고침 방지
 
@@ -85,7 +85,6 @@ const TodoCreate = ({
     setOpen(false); // open 닫기
   };
   function onChange(date, dateString) {
-    console.log(date, dateString);
     setDeadLine(dateString);
   }
   return (
@@ -99,7 +98,10 @@ const TodoCreate = ({
             value={value}
           />
           <Space direction="vertical">
-            <DatePicker onChange={onChange} />
+            <DatePicker
+              style={{ padding: "18px", fontSize: "21px" }}
+              onChange={onChange}
+            />
           </Space>
           <CircleButton onClick={handleToggle} open={open}>
             <PlusCircleOutlined />
