@@ -75,7 +75,6 @@ interface TodoItemProps {
 const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
   const done = todo.done;
   const handleToggle = () => {
-    console.log("toggle", todo);
     toggleTodo(todo.id);
   };
 
@@ -87,7 +86,6 @@ const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
 
   const handleOk = () => {
     setIsModalVisible(false);
-    console.log("delete", todo);
     removeTodo(todo.id);
   };
 
@@ -110,13 +108,13 @@ const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
           visible={isModalVisible}
           onOk={handleOk}
           onCancel={handleCancel}
+          maskClosable={true}
         >
           <p>
             {todo.text} {todo.deadLine}
           </p>
           <p>일정을 삭제하시겠습니까?</p>
         </Modal>
-
         <DeleteOutlined />
       </Remove>
     </TodoItemBlock>

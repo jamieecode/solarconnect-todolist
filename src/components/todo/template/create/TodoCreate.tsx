@@ -66,9 +66,11 @@ const TodoCreate = ({
   const [deadLine, setDeadLine] = useState("");
 
   const handleToggle = () => setOpen(!open);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // 새로고침 방지
 
@@ -84,6 +86,7 @@ const TodoCreate = ({
     setValue(""); // input 초기화
     setOpen(false); // open 닫기
   };
+
   function onChange(date, dateString) {
     setDeadLine(dateString);
   }
